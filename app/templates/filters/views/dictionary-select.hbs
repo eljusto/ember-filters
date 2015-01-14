@@ -1,0 +1,12 @@
+<div class="col-sm-6">
+  {{
+    view "select"
+    content=view.filtersDictionary
+    optionValuePath="content.id"
+    optionLabelPath="content.name"
+    class="form-control"
+    value=view.selectedItem
+    prompt=" "
+  }}
+</div>
+<div {{bind-attr class=":alert-dict-select view.hideAlert:hidden"}} role="alert">Filter exists!</div>

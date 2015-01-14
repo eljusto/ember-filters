@@ -1,0 +1,6 @@
+<div class="col-sm-6">
+  {{#if flr.measureUnit}}
+  <span class='filter-measure-unit'>{{flr.measureUnit}}</span>
+  {{/if}}
+  {{ view 'filters/dict-autocomplete' name=textFields.0.name filterBinding="flr" dictionaryBinding="flr.dictionary" class="form-control" maxlength="255" }}
+</div>

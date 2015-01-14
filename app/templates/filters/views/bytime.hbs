@@ -1,0 +1,15 @@
+<span class="close" {{action "cleanByTime" target="view"}}></span>
+<div class="clearfix"></div>
+<div class="filter-date-block row calendar-block">
+  <ul class="col-xs-6">
+    {{ view "pickmeup" name="current-view-period" placeholder="Select" class="form-control date-picker-period" readonly="readonly" view=view.getDateMode maxlength="255" valueBinding="view.dateFrom"}}
+  </ul>
+  <div class="col-xs-3 period-value">{{byTimePeriod}}</div>
+  <div class="col-xs-3 row">
+    <div class="period-switch u-absolute-right">
+      <a {{bind-attr class=":month-period view.dateModeMonth:period-active"}} {{action 'periodSwitch' 'month' target="view"}}>M</a>
+      <a {{bind-attr class=":quarter-period view.dateModeQuarter:period-active"}} {{action 'periodSwitch' 'quarter' target="view"}}>Q</a>
+      <a {{bind-attr class=":year-period view.dateModeYear:period-active"}} {{action 'periodSwitch' 'year' target="view"}}>Y</a>
+    </div>
+  </div>
+</div>

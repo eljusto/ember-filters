@@ -1,0 +1,13 @@
+<div class="dropdown">
+  <span {{bind-attr class=":dropdown-toggle view.dictionaryClass"}} {{action "showPopup" target="view"}}></span>
+  <div {{bind-attr class=":popup view.popup:visible"}}>
+    <span class="close" {{action "hidePopup" target="view"}}></span>
+    <ul>
+      {{#each item in view.filterDictionary}}
+        <li {{bind-attr class="item.isSelected:selected"}} {{action 'dictionaryItemSelected' item target="view"}}>{{item.name}}</li>
+      {{/each}}
+    </ul>
+    <button {{bind-attr class=":add view.linkedFilter:invisible"}} {{action "addAction" target="view"}}>ADD</button>
+    <button class="go" {{action "goAction" target="view"}}>GO</button>
+  </div>
+</div>

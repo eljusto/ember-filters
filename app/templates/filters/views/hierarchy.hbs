@@ -1,0 +1,10 @@
+<div {{bind-attr class="flr.id :hierarchy :col-sm-6"}}>
+  <ol class="hierarchy-item" {{action "showPopup" target="view"}}></ol>
+  <div class="dropdown">
+	  <div {{bind-attr class=":popup :hierarchy-popup view.popup:visible"}}>
+	    <span class="close" {{action "hidePopup" target="view"}}></span>
+	    <ol class="hierarchy-select"></ol>
+	    <button class="go" {{action "goAction" target="view"}}>GO</button>
+	  </div>
+   </div>
+</div>

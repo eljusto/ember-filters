@@ -1,0 +1,146 @@
+{{outlet loading}}
+<nav class="navbar navbar-default navbar-bottom" role="navigation">
+  <!-- type filter -->
+  <div class="navbar-center col-md-6" search-sort role="search">
+    <div id="product-search-block">
+      {{ view 'product-autocomplete' valueBinding="productSearchText" controllerBinding="this" placeholder="Search" class="form-control" maxlength="255" }}
+    </div>
+    <!-- search by -->
+      <ul class="nav-list">
+        <li class="searching nav-item">SEARCH BY:</li>
+        <li class="dropdown nav-item">
+          <span class="dropdown-toggle" data-toggle="dropdown">{{currentSearchTypeTitle}} <b class="caret"></b></span>
+          <ul class="dropdown-menu">
+            {{#each topSearchFields}}
+              <li><a {{action 'setSearchType' this.id}}>{{this.title}}</a></li>
+            {{/each}}
+          </ul>
+        </li>
+    </div>
+    <!-- sort -->
+    <div class="nav navbar-right col-md-3">
+      <ul class="nav-list">
+        <li class="dropdown nav-item">
+          <span class="dropdown-toggle" data-toggle="dropdown"><span class="sorting">SORT BY:</span>{{currentSortTypeTitle}} <b class="caret"></b></span>
+          <ul class="dropdown-menu">
+            {{#each columns}}
+              {{#if sort}}
+                <li><a {{action 'setSortType' name 'asc'}}>{{title}} (asc)</a></li>
+                <li><a {{action 'setSortType' name 'desc'}}>{{title}} (desc)</a></li>
+              {{/if}}
+            {{/each}}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="row content">
+<div class="col col-md-3">
+  <div class="tabbable">
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1">
+
+          <!-- filter lists -->
+          <div class="left-list">
+            {{#if areFiltersApplied}}
+              <ul class="list-group selected">
+				        <span class="clear" {{action 'showClearFiltersRequest'}}></span>
+                <li data-toggle="collapse" data-target="#selected-collapse" class="list-group-item title">You have selected</li>
+                <div id="selected-collapse" class="collapse in">
+                  {{#with displayedCriterias}}
+                    {{#each search}}
+                      <li class="list-group-item" {{bind-attr title=this.text}}>
+                        {{this.text}}
+                        <span class="remove" {{action 'removeSearchText' this}}></span></li>
+                    {{/each}}
+                    {{#each categories}}
+                      <li class="list-group-item" {{bind-attr title=this.title}}>
+                        <span {{bind-attr class=":filter-mode this.mode"}}></span>
+                        {{this.title}}
+                        <span class="remove" {{action 'removeCategoryItem' this}}></span>
+                      </li>
+                    {{/each}}
+                    {{#each filters}}
+                      <li class="list-group-item" {{bind-attr title=this.title}}>
+                        {{#if this.sorting}}
+                          <span {{bind-attr class=":sorting this.sortOrder"}} {{action 'sortFilters' this}}></span>
+                        {{/if}}
+                        <span {{bind-attr class=":filter-mode this.mode"}}></span>
+                        {{this.title}}
+                        <span class="remove" {{action 'removeFilterItem' this}}></span>
+                      </li>
+                    {{/each}}
+                  {{/with}}
+                </div>
+              </ul>
+            {{/if}}
+          <ul class="list-group categories">
+            {{#each category in categories}}
+                <li data-toggle="collapse" data-target="#category-collapse-{{unbound category.displayId}}" {{bind-attr class=":list-group-item :title category.selectedItems::collapsed"}}> {{category.title}}</li>
+                <div id="category-collapse-{{unbound category.displayId}}" {{bind-attr class=":collapse category.selectedItems:in"}}>
+                {{#each item in category.items}}
+                  {{#if item.isWeightMoreThanZero}}
+                    <div class="checkbox">
+                      <li class="list-group-item">
+                        <span {{bind-attr class=":filter-mode item.mode"}} {{action 'categoryCheckboxChecked' item}}></span>
+                        <span {{bind-attr class=":filter-title item.isChecked:active"}}>{{item.title}}</span>
+                      </li>
+                    </div>
+                  {{/if}}
+                {{/each}}
+                {{#if category.hasMoreProperty}}
+                  <div class='more-less-block'><a class='more-less' {{action 'showMoreCategories' category}}>more...</a></div>
+                {{/if}}
+                {{#if category.hasLessProperty}}
+                  <div class='more-less-block'><a class='more-less' {{action 'showLessCategories' category}}>hide...</a></div>
+                {{/if}}
+              </div>
+            {{/each}}
+          </ul>
+          {{#if areFiltersExist}}
+            {{#each filter in filters}}
+                <ul class="list-group filters">
+                  <li data-toggle="collapse" data-target="#category-collapse-{{unbound filter.id}}" {{bind-attr class=":list-group-item :title filter.displayItems::collapsed"}}>{{filter.title}}</li>
+                  <div id="category-collapse-{{unbound filter.id}}" {{bind-attr class=":collapse filter.displayItems:in"}}>
+                  {{#each filterItem in filter.items}}
+                    {{#unless filterItem.isHidden}}
+                      <li class="list-group-item filter-item">
+                        {{#with filterItem as flrItem}}
+                          {{partial 'filter-block'}}
+                        {{/with}}
+                      </li>
+                    {{/unless}}
+
+                    {{#if filterItem.linkedFilterItems}}
+                      {{#each flrItem in filterItem.linkedFilterItems}}
+                        {{#unless flrItem.isHidden}}
+                          <li class="list-group-item filter-item linkedFilters">
+                            {{partial 'filter-block'}}
+                          </li>
+                        {{/unless}}
+                      {{/each}}
+                    {{/if}}
+                  {{/each}}
+                </div>
+              </ul>
+            {{/each}}
+          {{/if}}
+          <ul class="list-group search">
+            <li class="list-group-item title search">
+              <form {{action 'resultsSearchFormSubmit' on='submit'}}>
+                {{input type="text" class="form-control" placeholder="Search within results" valueBinding="resultsSearchText" maxlength="255"}}
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col col-md-9 items">
+  {{outlet 'modal-confirm'}}
+  {{outlet}}
+</div>
+</div>

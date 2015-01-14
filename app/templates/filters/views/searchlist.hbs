@@ -1,0 +1,22 @@
+<div class="col-sm-6">
+	<span class="dict-select form-control" {{action "showPopup" target="view"}}>{{view.selectedItem}}</span>
+</div>
+<div class="dropdown main-autocomplete">
+	<div {{bind-attr class=":popup view.popup:visible"}}>
+	    <span class="close" {{action "hidePopup" target="view"}}></span>
+	    <div class="input">
+	    	{{input value=view.findValue class="form-control"}}
+	    </div>
+		<ul>
+			{{#if view.result}}
+				{{#each item in view.result}}
+					<li {{action 'selectItem' item target="view"}}>{{unbound item.name}}</li>
+				{{/each}}
+			{{else}}
+				{{#each item in view.topRecords}}
+					<li {{action 'selectItem' item target="view"}}>{{unbound item.name}}</li>
+				{{/each}}
+			{{/if}}
+		</ul>
+	</div>
+</div>

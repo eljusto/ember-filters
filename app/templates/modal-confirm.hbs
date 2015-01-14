@@ -1,0 +1,16 @@
+<div class="overlay">
+<div class="modal-dialog confirm">
+  <div class="modal-content">
+    <div class="modal-header"><span class="modal-header-text">WARNING</span>
+      <span class="close" {{action 'cancelButtonPressed' target='view' }}>&times;</span>
+    </div>
+    <div class="modal-body">
+      <p>{{view.messageText}}</p>
+    </div>
+    <div class="modal-footer">
+      <a class="btn btn-default no" {{action 'cancelButtonPressed' target='view' }}>NO</a>
+      <a class="btn btn-default yes" {{action 'yesButtonPressed' target='view'}}>YES</a>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,10 @@
+{{#each textField in flr.textFields}}
+  <div class="col-sm-6">
+    {{#if flr.measureUnit}}
+      <span class='filter-measure-unit'>{{flr.measureUnit}}</span>
+    {{/if}}
+    <form {{action "goAction" flr on="submit"}}>
+    	{{input type="text" name=textField.name value=textField.value class="form-control"}}
+    </form>
+  </div>
+{{/each}}

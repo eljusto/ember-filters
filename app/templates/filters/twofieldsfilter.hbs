@@ -1,0 +1,16 @@
+<div class="col-xs-7 row input-list">
+{{#each textField in flr.textFields}}
+  <div class="col filter-text-field-2">
+ 	 <form {{action "goAction" flr on="submit"}} role="form">
+	    {{#if flr.measureUnit}}
+	    	{{input type="text" placeholder=flr.measureUnit name=textField.name value=textField.value class="form-control"}}
+	    {{else}}
+	    	{{input type="text" name=textField.name value=textField.value class="form-control"}}
+	    {{/if}}
+    </form>
+  </div>
+  <div class="separator"> – </div>
+{{/each}}
+<button class="go two-fields" {{action "goAction" flr}}>GO</button>
+</div>
+

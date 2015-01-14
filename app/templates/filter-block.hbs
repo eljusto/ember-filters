@@ -1,0 +1,45 @@
+<div {{bind-attr class=":form-horizontal flrItem.isChecked:active"}} role="form">
+  <div class="form-group">
+    <div class="col-xs-5">
+      {{#if flrItem.isGlobal}}
+        <span class='filter-title'>{{flrItem.title}}</span>
+      {{else}}
+        <span {{bind-attr class=":filter-mode flrItem.filterMode"}} {{action 'goAction' flrItem true}}></span>
+        <span  {{bind-attr class=":filter-title flrItem.isChecked:active"}} {{action 'goAction' flrItem true}}>{{flrItem.title}}</span>
+      {{/if}}
+    </div>
+    {{#with ../flrItem as flr}}
+      {{partial flr.getInputTemplate}}
+    {{/with}}
+  </div>
+  <div class="filter-dictionaries-block">
+    {{#if flrItem.subcriterias}}
+      {{#each subcriteria in flrItem.subcriterias}}
+        {{#if subcriteria.template}}
+          {{partial subcriteria.template}}
+        {{/if}}
+    {{/each}}
+    {{/if}}
+  </div>
+  {{#if flrItem.isPlural}}
+  <span class="filter-add-button" {{action 'newFilterRow' flrItem}}>+</span>
+  {{/if}}
+  {{#if flrItem.relations}}
+    {{#each relationTitle in flrItem.relationTitles}}
+      {{relationTitle}} &nbsp;
+    {{/each}}
+  {{/if}}
+  {{#if flrItem.calendar}}
+    <div {{bind-attr class=":filter-date-range flrItem.isChecked:active"}}>
+      {{#if flrItem.dateRange.lte}}
+        {{flrItem.dateRange.gte}} – {{flrItem.dateRange.lte}}
+      {{/if}}
+      {{#unless flrItem.dateRange.lte}}
+        {{flrItem.dateRange.gte}}
+      {{/unless}}
+      {{view 'filters/sub-calendar' filterBinding="flrItem"}}
+    </div>
+  {{/if}}
+</div>
+
+

@@ -1,0 +1,36 @@
+<span class="calendar-button"></span>
+<div {{bind-attr class=":filter-date-block"}}>
+  <div class="row calendar-block-edit collapse out">
+      {{#if view.calendarRange}}
+      <ul class="col-xs-8">
+        {{ view "pickmeup" placeholder="From" class="form-control date-picker" view=view.getDateMode maxlength="255" valueBinding="view.dateFrom"}}
+        <div class="separator"> – </div>
+        {{ view "pickmeup" placeholder="To" class="form-control date-picker" view=view.getDateMode maxlength="255" valueBinding="view.dateTo"}}
+      </ul>
+      {{/if}}
+      {{#if view.calendarSingle}}
+      <ul class="col-xs-6">
+        {{ view "pickmeup" placeholder="Date" class="form-control date-picker-single" view="days" maxlength="255" valueBinding="view.date"}}
+      </ul>
+      {{/if}}
+      {{#if view.calendarPeriod}}
+      <ul class="col-xs-6">
+        {{ view "pickmeup" name="current-view-period" placeholder="From" class="form-control date-picker-period" readonly="readonly" view=view.getDateMode maxlength="255" valueBinding="view.datePeriod"}}
+        </ul>
+      {{/if}}
+      {{#if view.calendarPeriod}}
+      <div class="col-xs-5 row">
+        <div class="period-switch">
+          <a {{bind-attr class=":month-period view.dateModeMonth:period-active"}} {{action 'periodSwitched' 'month' target="view"}}>M</a>
+          <a {{bind-attr class=":quarter-period view.dateModeQuarter:period-active"}} {{action 'periodSwitched' 'quarter' target="view"}}>Q</a>
+          <a {{bind-attr class=":year-period view.dateModeYear:period-active"}} {{action 'periodSwitched' 'year' target="view"}}>Y</a>
+        </div>
+        <a {{action 'dateRangeReplace' target="view"}}>Apply</a>
+        </div>
+      {{else}}
+      <div class="col-xs-4 row">
+        <a {{action 'dateRangeReplace' target="view"}}>Apply</a>
+    </div>
+      {{/if}}
+  </div>
+</div>
